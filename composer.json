@@ -1,0 +1,17 @@
+{
+    "name": "spaceflora/learnosity-downloader",
+    "authors": [
+        {
+            "name": "Evan de Graaff",
+            "email": "evan@zuluconnect.net"
+        }
+    ],
+    "require": {
+        "learnosity/learnosity-sdk-php": "^0.8.2"
+    },
+    "config": {
+        "platform": {
+            "php": "7"
+        }
+    }
+}
