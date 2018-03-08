@@ -65,18 +65,28 @@ class Processor
         $exporterMethod = 'export'.ucfirst($exportType);
 
         $totalCount = 0;
+        $emptyResultCount = 0;
 
         do {
             try {
                 list($next, $count) = $this->exporter->$exporterMethod($dataDir, $next);
                 $totalCount += $count;
 
+                // handle responses with next set, but without new results
+                if (0 === $count) {
+                    ++$emptyResultCount;
+
+                    sleep(10);
+                } else {
+                    $emptyResultCount = 0;
+                }
+
                 if (true === $next) {
                     // take a break
                     $this->write($exportType, 'SLEEP');
 
                     sleep(60);
-                } elseif (false === $next) {
+                } elseif (false === $next || 3 === $emptyResultCount) {
                     // end reached
                     $this->write($exportType, 'DONE');
 
