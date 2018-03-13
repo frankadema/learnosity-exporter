@@ -57,9 +57,9 @@ class Exporter
 
         $count = 0;
 
-          foreach ($body['data'] as $item){
-            if(! glob($dataDir.'/'.$item['type'])){
-              mkdir($dataDir.'/'.$item['type']);
+        foreach ($body['data'] as $item){
+            if (!file_exists($dataDir.'/'.$item['type'])) {
+                mkdir($dataDir.'/'.$item['type']);
             }
 
             $file = $dataDir.'/'.$item['type'].'/'.$item['reference'].'.json';
@@ -67,7 +67,8 @@ class Exporter
             file_put_contents($file, json_encode($item));
 
             ++$count;
-          }
+        }
+
         return [$this->getNext($body), $count];
     }
     /**
@@ -106,9 +107,9 @@ class Exporter
         $count = 0;
 
         foreach ($body['data'] as $item){
-          if(! glob($dataDir.'/'.$item['type'])){
-            mkdir($dataDir.'/'.$item['type']);
-          }
+            if (!file_exists($dataDir.'/'.$item['type'])) {
+                mkdir($dataDir.'/'.$item['type']);
+            }
 
             $file = $dataDir.'/'.$item['type'].'/'.$item['reference'].'.json';
 
